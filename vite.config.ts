@@ -1,22 +1,24 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 
 // import VueMacros from 'unplugin-vue-macros'
 
-import { VueRouterAutoImports } from 'unplugin-vue-router'
+import { VueRouterAutoImports } from 'unplugin-vue-router';
 
-import VueRouter from 'unplugin-vue-router/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import Layouts from 'vite-plugin-vue-layouts'
-import UnoCSS from 'unocss/vite'
+import VueRouter from 'unplugin-vue-router/vite';
+import AutoImport from 'unplugin-auto-import/vite';
+import Components from 'unplugin-vue-components/vite';
+import Layouts from 'vite-plugin-vue-layouts';
+import UnoCSS from 'unocss/vite';
 
-import { VitePWA } from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa';
 
-import { viteMockServe } from 'vite-plugin-mock'
+import { viteMockServe } from 'vite-plugin-mock';
+
+import postcssViewportPlugin from 'postcss-px-to-viewport-8-plugin';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -46,7 +48,8 @@ export default defineConfig({
         'vue',
         // 'vue-router'
         VueRouterAutoImports,
-        '@vueuse/core'
+        '@vueuse/core',
+        'pinia'
       ]
     }),
     Components({
@@ -86,5 +89,38 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
+  },
+  css: {
+    postcss: {
+      plugins: [
+        postcssViewportPlugin({
+          unitToConvert: 'px', // 需要转换的单位，默认为"px"
+          // viewportWidth: (file) => {
+          //   // 设计稿的视窗宽度
+          //   // console.log('file', file);
+          //   return 750;
+          //   let num = 1920;
+          //   if (file.indexOf('m_') !== -1) {
+          //     num = 375;
+          //   }
+          //   return num;
+          // },
+          viewportWidth: 750, // 一般设计稿的宽度
+          unitPrecision: 5, // 单位转换后保留的精度
+          propList: ['*', '!font-size'], // 能转化为vw的属性列表
+          viewportUnit: 'vw', // 希望使用的视口单位
+          fontViewportUnit: 'vw', // 字体使用的视口单位
+          selectorBlackList: [], // 需要忽略的CSS选择器，不会转为视口单位，使用原有的px等单位。
+          minPixelValue: 1, // 设置最小的转换数值，如果为1的话，只有大于1的值会被转换
+          mediaQuery: true, // 媒体查询里的单位是否需要转换单位
+          replace: true, //  是否直接更换属性值，而不添加备用属性
+          exclude: [/node_modules\/ant-design-vue/], // 忽略某些文件夹下的文件或特定文件，例如 'node_modules' 下的文件
+          include: [/\/src\//], // 如果设置了include，那将只有匹配到的文件才会被转换
+          landscape: false, // 是否添加根据 landscapeWidth 生成的媒体查询条件 @media (orientation: landscape)
+          landscapeUnit: 'vw', // 横屏时使用的单位
+          landscapeWidth: 1024 // 横屏时使用的视口宽度
+        })
+      ]
+    }
   }
-})
+});

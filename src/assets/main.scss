@@ -1,0 +1,56 @@
+:root {
+  --primary-color: #316c72;
+  --dark-bg: #18181c;
+  --base-font-size: 16px; // 根元素字体大小
+}
+
+/* 默认字体大小 */
+html {
+  // font-size: var(--base-font-size);
+  font-size: 16px;
+}
+
+/* 在小屏幕上 */
+@media only screen and (max-width: 480px) {
+  html {
+    font-size: calc(16px * 0.75); /* 87.5% of base font size */
+  }
+}
+
+/* 在小到中等尺寸屏幕上 */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  html {
+    font-size: calc(16px * 0.875); /* Same as base font size */
+  }
+}
+
+/* 在中等到大尺寸屏幕上 */
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  html {
+    font-size: calc(16px); /* 112.5% of base font size */
+  }
+}
+
+/* 在大屏幕上 */
+@media only screen and (min-width: 1025px) {
+  html {
+    font-size: calc(16px * 1.125); /* 125% of base font size */
+  }
+}
+
+/* 在大屏幕上 */
+@media only screen and (min-width: 1300px) {
+  html {
+    font-size: calc(16px * 1.25); /* 125% of base font size */
+  }
+}
+
+
+.mobile-device {
+  .mobile {
+    display: block;
+  }
+  .mobile-hide {
+    display: none;
+  }
+}

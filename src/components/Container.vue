@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto flex items-center justify-start w-[1200px]">
+  <div class="mx-auto flex items-center justify-start max-w-[1200px] w-full">
     <slot></slot>
   </div>
 </template>

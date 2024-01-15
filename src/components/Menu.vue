@@ -1,5 +1,10 @@
 <template>
-  <div class="flex">
+  <div
+    :class="[
+      'flex',
+      { 'flex-col': align == 'vertical', 'flex-row': align == 'horizanal' }
+    ]"
+  >
     <router-link to="/" class="item">产品</router-link>
     <router-link to="/study" class="item">学习</router-link>
     <!-- <router-link to="/community">社区</router-link> -->
@@ -8,11 +13,17 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  align: {
+    type: String as PropType<'vertical' | 'horizanal'>
+  }
+});
+</script>
 
 <style scoped>
 .item {
-  @apply relative text-xl px-8 py-2 font-300;
+  @apply relative text-xl px-8 py-2 font-300 cursor-pointer lt-sm:self-start;
   &:hover {
     @apply font-500;
     &::after {
