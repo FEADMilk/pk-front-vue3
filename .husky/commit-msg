@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo -e “\033[33m \[trigger commit-msg\] \033[0m”
+
+message="$(cat $1)"
+requiredPattern="^(feat:|fix:|docs:|style:|refactor:|pref:|test:|build:|ci:|chore:|revert:|Merge) .*$"
+buildPattern="^(build:) .*$"
+
+echo -e "\033[32m Recived message '------->' \033[0m \033[42;37m $message \033[0m" 
+
+if ! [[ $message =~ $requiredPattern ]];
+then
+  echo -e "\033[31m --------------------------------------- \033[0m"
+  echo -e "\033[31m !!!! Your commit message is invalid. Please use conventional commits. !!!! \033[0m"
+  echo -e "\033[43m commit types list: \033[0m"
+  echo -e "\033[33m feat => 新功能 feature \033[0m"
+  echo -e "\033[33m fix => 修复 bug \033[0m"
+  echo -e "\033[33m docs => 文档注释 \033[0m"
+  echo -e "\033[33m style => 代码格式(不影响代码运行的变动) \033[0m"
+  echo -e "\033[33m refactor => 重构(既不增加新功能，也不是修复bug) \033[0m"
+  echo -e "\033[33m perf => 性能优化 \033[0m"
+  echo -e "\033[33m test => 增加测试 \033[0m"
+  echo -e "\033[33m chore => 构建过程或辅助工具的变动 \033[0m"
+  echo -e "\033[33m revert => 回退 \033[0m"
+  echo -e "\033[33m build => 打包 \033[0m"
+  echo -e "\033[31m --------------------------------------- \033[0m"
+  exit 1
+else
+  echo "Your commit message is valid."
+fi
+
+
+# 添加测试，eslint，编译，打包，部署
+if [[ $message =~ $buildPattern ]];
+then
+  sh $(dirname -- "$0")/deploy.sh
