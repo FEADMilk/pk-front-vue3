@@ -32,6 +32,6 @@ fi
 
 
 # 添加测试，eslint，编译，打包，部署
-if [[ $message =~ $buildPattern ]];
-then
-  sh $(dirname -- "$0")/deploy.sh
+# if [[ $message =~ $buildPattern ]];
+# then
+  # sh $(dirname -- "$0")/deploy.sh
